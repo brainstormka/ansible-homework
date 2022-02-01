@@ -1,0 +1,33 @@
+---
+- name: playbook1
+  hosts: all
+
+  tasks:
+  - name: Install httpd
+    ansible.builtin.package:
+      name: httpd
+      state: present
+
+  - name: Start web-server
+    ansible.builtin.service:
+      name: httpd
+      state: started
+
+  - name: Create file with content
+    copy:
+      dest: /var/www/html/index.html
+      content: Welcome to my web server
+  
+  - name: Start firewall
+    ansible.builtin.service:
+      name: firewalld
+      state: started
+
+  - name: Open port
+    ansible.posix.firewalld:
+      service: http
+      state: enabled
+
+    
+
+  
