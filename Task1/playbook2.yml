@@ -3,6 +3,12 @@
   hosts: all
 
   tasks:
+  - name: Stop httpd
+    ansible.builtin.service:
+      name: httpd
+      state: stopped
+      enabled: no
+
   - name: Uninstall httpd
     ansible.builtin.yum:
       name: httpd
@@ -17,6 +23,7 @@
     ansible.posix.firewalld:
       service: http
       state: disabled
+      permanent: yes
 
     
 

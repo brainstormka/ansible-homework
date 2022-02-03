@@ -12,6 +12,7 @@
       ansible.builtin.service:
         name: httpd
         state: started
+        enabled: yes
 
     - name: Create file with content
       ansible.builtin.copy:
@@ -27,8 +28,10 @@
       ansible.builtin.service:
         name: firewalld
         state: started
+        enabled: yes
 
     - name: Open ports
       ansible.posix.firewalld:
         service: http
         state: enabled
+        permanent: yes
