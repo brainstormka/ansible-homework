@@ -1,0 +1,37 @@
+---
+- name: playbook3
+  hosts: all
+  tasks:
+  - name: Change net.ifnames parameter if exists
+    ansible.builtin.lineinfile:
+      path: /etc/default/grub
+      regexp: '^(.*net\.ifnames)(=. )(.*)$'
+      line: '\1=0 \3'
+      backrefs: yes
+
+  - name: Change biosdevname parameter if exists
+    ansible.builtin.lineinfile:
+      path: /etc/default/grub
+      regexp: '^(.*biosdevname)(=. )(.*)$'
+      line: '\1=0 \3'
+      backrefs: yes
+
+  - name: Add net.ifnames parameter if it doesn't exist
+    ansible.builtin.lineinfile:
+      state: present
+      dest: /etc/default/grub
+      backrefs: yes
+      regexp: '^(GRUB_CMDLINE_LINUX=(?!.*ifnames)\"[^\"]+)(\".*)'
+      line: '\1 net.ifnames=0\2'
+
+  - name: Add biosdevname parameter if it doesn't exist
+    ansible.builtin.lineinfile:
+      state: present
+      dest: /etc/default/grub
+      backrefs: yes
+      regexp: '^(GRUB_CMDLINE_LINUX=(?!.*ifnames)\"[^\"]+)(\".*)'
+      line: '\1 biosdevname=0\2'
+
+  - name: Run command grub2-mkconfig
+    ansible.builtin.shell:
+      cmd: /bin/bash grub2-mkconfig -o /boot/grub2/grub.cfg

@@ -1,0 +1,23 @@
+---
+- name: playbook2
+  hosts: all
+
+  tasks:
+  - name: Uninstall httpd
+    ansible.builtin.yum:
+      name: httpd
+      state: absent
+
+  - name: Delete file
+    ansible.builtin.file:
+      path: /var/www/html/index.html
+      state: absent
+
+  - name: Close ports
+    ansible.posix.firewalld:
+      service: http
+      state: disabled
+
+    
+
+  
