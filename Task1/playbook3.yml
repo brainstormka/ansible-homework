@@ -1,6 +1,7 @@
 ---
 - name: playbook3
   hosts: all
+  
   tasks:
   - name: Change net.ifnames parameter if exists
     ansible.builtin.lineinfile:

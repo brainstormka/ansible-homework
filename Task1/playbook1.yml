@@ -3,35 +3,35 @@
   hosts: all
 
   tasks:
-    - name: Install httpd
-      ansible.builtin.yum:
-        name: httpd
-        state: present
+  - name: Install httpd
+    ansible.builtin.yum:
+      name: httpd
+      state: present
 
-    - name: Start httpd
-      ansible.builtin.service:
-        name: httpd
-        state: started
-        enabled: yes
+  - name: Start httpd
+    ansible.builtin.service:
+      name: httpd
+      state: started
+      enabled: yes
 
-    - name: Create file with content
-      ansible.builtin.copy:
-        dest: /var/www/html/index.html
-        content: Welcome to my web server
+  - name: Create file with content
+    ansible.builtin.copy:
+      dest: /var/www/html/index.html
+      content: Welcome to my web server
 
-    - name: Install firewalld
-      ansible.builtin.yum:
-        name: firewalld
-        state: present
+  - name: Install firewalld
+    ansible.builtin.yum:
+      name: firewalld
+      state: present
 
-    - name: Start firewalld
-      ansible.builtin.service:
-        name: firewalld
-        state: started
-        enabled: yes
+  - name: Start firewalld
+    ansible.builtin.service:
+      name: firewalld
+      state: started
+      enabled: yes
 
-    - name: Open ports
-      ansible.posix.firewalld:
-        service: http
-        state: enabled
-        permanent: yes
+  - name: Open ports
+    ansible.posix.firewalld:
+      service: http
+      state: enabled
+      permanent: yes
