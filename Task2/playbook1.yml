@@ -1,0 +1,19 @@
+---
+- name: playbook1
+  hosts: all
+
+  vars_files:
+    - secret.yml
+
+  tasks:
+    - name: Create users
+      ansible.builtin.user:
+        name: "{{ item.username }}"
+        password: "{{ password | password_hash('sha512') }}"
+        home: "/home/{{ item.homedir }}"
+        comment: "{{ item.username }}@example.com"
+        update_password: on_create
+      with_items:
+              - {username: Alice, homedir: Alice}
+              - {username: Bob, homedir: Bob}
+              - {username: Carol, homedir: Carol}
