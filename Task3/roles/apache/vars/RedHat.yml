@@ -7,3 +7,5 @@ apache_service_enabled: yes
 apache_daemon: httpd
 apache_user: apache
 apache_group: apache
+
+page_content: This is content for page from vars 

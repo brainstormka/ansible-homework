@@ -25,10 +25,12 @@
     - 80/tcp
     - 443/tcp
 
-- name: Create index
-  ansible.builtin.copy:
-    content: "Welcome to my web server"
+- name: Create index from template
+  ansible.builtin.template:
+    src: templates/index.html.j2
     dest: /var/www/html/index.html
     owner: "{{ apache_user }}"
     group: "{{ apache_group }}"
     mode: '0644'
+    backup: yes
+  notify: restart_httpd
