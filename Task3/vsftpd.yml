@@ -1,0 +1,5 @@
+---
+- name: vsftpd ftp server
+  hosts: node2.example.com
+  roles:
+    - vsftpd
